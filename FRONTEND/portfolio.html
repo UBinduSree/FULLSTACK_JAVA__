@@ -1,0 +1,191 @@
+<!--
+Bindu Sree's Portfolio — Bright Theme HTML + CSS
+Instructions: Save as index.html and open in a browser.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bindu Sree — Portfolio</title>
+  <meta name="description" content="Bindu Sree | B.Tech CSE (AI & ML) student — Portfolio showcasing skills, projects, experience, and achievements." />
+  <meta name="keywords" content="Bindu Sree, AI & ML, Portfolio, Web Developer, MERN Stack, CSE Student" />
+  <meta name="author" content="Bindu Sree" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics (Replace with your GA ID if needed) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <style>
+    :root{
+      --bg-1: #ffffff;
+      --accent-1: #ff6b6b; /* coral */
+      --accent-2: #4e9cff; /* blue */
+      --accent-3: #7ef9a2; /* mint */
+      --muted: #555;
+      --max-width: 1100px;
+      --card-radius: 18px;
+    }
+
+    body{
+      margin:0;
+      font-family:'Inter', sans-serif;
+      background: linear-gradient(180deg,#ffffff 0%,#f0f7ff 100%);
+      color:#222;
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand h1{font-family:'Poppins';font-size:20px;margin:0;color:#222}
+    nav{display:flex;gap:12px}
+    nav a{text-decoration:none;color:#333;padding:8px 12px;border-radius:12px;font-weight:600}
+    nav a:hover{background:#eaf3ff;color:#111}
+
+    .hero{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:center;margin-bottom:40px}
+    .intro h2{font-family:'Poppins';font-size:32px;margin:0 0 10px;color:#111}
+    .intro p{margin:0 0 18px;color:var(--muted)}
+    .btn{padding:10px 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;text-decoration:none}
+    .btn-primary{background:linear-gradient(90deg,var(--accent-1),#ff9f80);color:#fff}
+    .btn-ghost{background:#f9f9f9;color:#333;border:1px solid #ddd}
+
+    .profile{background:#fff;border-radius:var(--card-radius);padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.08);text-align:center}
+    .profile img{width:100%;max-width:220px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1)}
+    .profile h3{margin:12px 0 6px}
+    .profile p{margin:0;color:var(--muted)}
+
+    .section-head{display:flex;align-items:center;gap:8px;margin:32px 0 16px}
+    .section-head h4{margin:0;font-family:'Poppins';color:#111}
+
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    .skill{background:#fff;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06)}
+    .skill h5{margin:0 0 8px}
+    .bar{height:8px;background:#eee;border-radius:8px;overflow:hidden}
+    .bar span{display:block;height:100%;border-radius:8px}
+
+    .projects-grid{display:grid;grid-template-columns:1fr;gap:18px}
+    .project{background:#fff;padding:18px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06)}
+    .project h5{margin:0 0 8px}
+    .project a{text-decoration:none;color:var(--accent-1);font-weight:600}
+
+    .timeline{border-left:3px solid var(--accent-2);padding-left:14px}
+    .titem{margin-bottom:20px}
+    .titem h6{margin:0 0 6px;color:#111}
+    .titem p{margin:0;color:var(--muted)}
+
+    .contact-form{display:grid;gap:12px}
+    .contact-form input,.contact-form textarea{padding:12px;border-radius:8px;border:1px solid #ccc}
+    .contact-form button{background:linear-gradient(90deg,var(--accent-2),#7bb9ff);color:#fff;border:none}
+
+    footer{text-align:center;padding:20px;margin-top:40px;color:#666;font-size:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>Bindu Sree</h1>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <div class="intro">
+        <h2>Exploring Intelligence, Building Tomorrow.</h2>
+        <p>I am Bindu Sree, currently pursuing B.Tech 3rd year in Computer Science and Engineering with specialization in Artificial Intelligence and Machine Learning.</p>
+        <a class="btn btn-primary" href="#projects">View My Work</a>
+        <a class="btn btn-ghost" href="#contact">Contact Me</a>
+      </div>
+      <aside class="profile">
+        <img src="bINDU_PASSIZEpIC.jpg" alt="Bindu Sree profile picture (AI generated)" />
+        <h3>Bindu Sree</h3>
+        <p>CSE (AI & ML) Student</p>
+      </aside>
+    </div>
+
+    <section id="about">
+      <div class="section-head"><h4>About Me</h4></div>
+      <p>I am passionate about technology and problem-solving. My journey in AI & ML has just begun, and I am eager to explore innovative solutions. Along with programming, I enjoy learning full-stack development and exploring new technologies.</p>
+    </section>
+
+    <section id="skills">
+      <div class="section-head"><h4>Skills</h4></div>
+      <div class="skills-grid">
+        <div class="skill"><h5>C</h5><div class="bar"><span style="width:85%;background:var(--accent-2)"></span></div></div>
+        <div class="skill"><h5>Java</h5><div class="bar"><span style="width:80%;background:var(--accent-1)"></span></div></div>
+        <div class="skill"><h5>Python</h5><div class="bar"><span style="width:75%;background:var(--accent-3)"></span></div></div>
+        <div class="skill"><h5>DBMS</h5><div class="bar"><span style="width:70%;background:var(--accent-2)"></span></div></div>
+        <div class="skill"><h5>HTML & CSS</h5><div class="bar"><span style="width:90%;background:var(--accent-1)"></span></div></div>
+        <div class="skill"><h5>JavaScript</h5><div class="bar"><span style="width:70%;background:var(--accent-3)"></span></div></div>
+        <div class="skill"><h5>AI & ML (Beginner)</h5><div class="bar"><span style="width:50%;background:var(--accent-2)"></span></div></div>
+        <div class="skill"><h5>MERN Stack (Learning)</h5><div class="bar"><span style="width:40%;background:var(--accent-1)"></span></div></div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head"><h4>Projects</h4></div>
+      <div class="projects-grid">
+        <div class="project">
+          <h5>Docspot – Seamless Appointment Booking for Health 🏥💻</h5>
+          <p>Docspot is a web-based platform designed to simplify and speed up the process of booking medical appointments. It allows patients to find doctors, view available slots, and book instantly — reducing waiting times and improving healthcare accessibility.</p>
+          <p><strong>Tech Stack:</strong> HTML, CSS, JavaScript, Node.js, Express.js, MongoDB</p>
+          <a href="https://github.com/YeduguruHemaSriReddy/seamless-health-booking" target="_blank">GitHub Repository</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <div class="section-head"><h4>Resume & Experience</h4></div>
+      <div class="timeline">
+        <div class="titem">
+          <h6>Full Stack Development (MERN) Internship</h6>
+          <p>2-month virtual internship from SmartBridge and APSCHE.</p>
+        </div>
+        <div class="titem">
+          <h6>Academic Topper (2023-2024)</h6>
+          <p>Awarded for Academic Excellence in B.Tech.</p>
+        </div>
+        <div class="titem">
+          <h6>B.Tech in CSE (AI & ML) — Srinivasa Ramanujan Institute of Technology</h6>
+          <p>Currently pursuing 3rd year.</p>
+        </div>
+      </div>
+      <a class="btn btn-primary" href="https://docs.google.com/document/d/1Cr0zvrEeCER8q7deH940S000SDPiCQic/edit?usp=sharing" target="_blank">Download Resume</a>
+    </section>
+
+    <section id="contact">
+      <div class="section-head"><h4>Contact</h4></div>
+      <form class="contact-form" action="https://formspree.io/f/mnqerjpj" method="POST">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <textarea name="message" placeholder="Message..." required></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+      <p>Or reach me at <a href="mailto:bindusree0726@gmail.com">bindusree0726@gmail.com</a></p>
+      <p>
+        <a href="https://github.com/UBinduSree" target="_blank">GitHub</a> | 
+        <a href="https://www.linkedin.com/in/bindu-sree-3360a7336" target="_blank">LinkedIn</a>
+      </p>
+    </section>
+
+    <footer>
+      © 2025 Bindu Sree — Built with ❤️ using HTML & CSS
+    </footer>
+  </div>
+</body>
+</html>

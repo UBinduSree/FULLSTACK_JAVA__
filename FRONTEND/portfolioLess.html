@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simple Cool Portfolio</title>
+
+<!-- Readable, contrasting fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+
+<style>
+/* --------- Colors and tokens (easy to tweak) --------- */
+:root{
+  /* Unique but friendly palette */
+  --teal: #22c7b7;
+  --coral: #ff6f61;
+  --orchid: #8a6cff;
+
+  --text: #1f2530;
+  --muted: #5b6678;
+
+  --bg: linear-gradient(135deg, #f7fbff 0%, #fef6ff 50%, #fff7f2 100%);
+  --panel: rgba(255,255,255,0.6);
+  --panel-border: rgba(255,255,255,0.8);
+
+  --radius: 16px;
+  --shadow: 0 12px 28px rgba(30, 35, 55, 0.12);
+
+  --wrap: 1080px;
+  --pad: clamp(56px, 8vw, 96px) 20px;
+
+  --fast: 160ms ease;
+}
+
+/* --------- Base --------- */
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; } /* native smooth anchors [1] */
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Headings use a distinct font */
+h1,h2,h3{ font-family: Montserrat, Inter, sans-serif; margin:0 0 10px }
+h1{ font-size: clamp(32px, 6vw, 56px); line-height:1.05 }
+h2{ font-size: clamp(22px, 3.2vw, 32px) }
+p{ color: var(--muted); line-height:1.75; margin:0 0 10px }
+a{ color: inherit; text-decoration: none }
+
+.wrap{ max-width: var(--wrap); margin: 0 auto; padding: 0 18px }
+.section{ padding: var(--pad); position: relative }
+
+/* Simple glass card (easy to reuse) */
+.card{
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  backdrop-filter: blur(10px); /* frosted look [7][10] */
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Buttons */
+.btn{
+  display:inline-block; padding:12px 18px; border-radius: 999px;
+  border:1px solid var(--panel-border);
+  background: white;
+  font-weight: 700;
+  transition: transform var(--fast), box-shadow var(--fast);
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(30,35,55,0.18) }
+.btn.primary{
+  background: linear-gradient(135deg, var(--orchid), var(--teal));
+  color: #0d1220; border: none;
+}
+
+/* Simple top nav */
+.header{
+  position: sticky; top: 0; z-index: 5;
+  padding: 12px 0; backdrop-filter: blur(6px);
+}
+.nav{
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 12px; border-radius: 12px;
+}
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800 }
+.brand-badge{
+  width:22px; height:22px; border-radius:6px;
+  background: conic-gradient(from 120deg, var(--orchid), var(--teal), var(--coral), var(--orchid));
+}
+.menu a{ padding:8px 10px; border-radius:8px }
+.menu a:hover{ background: rgba(255,255,255,0.6); }
+
+/* Simple hero */
+.hero{
+  display:grid; gap: 28px; align-items:center;
+  grid-template-columns: 1.1fr 0.9fr;
+}
+.tag{
+  display:inline-block; font-size:13px; padding:6px 10px; border-radius:999px;
+  border:1px solid var(--panel-border); background: rgba(255,255,255,0.7);
+}
+.hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top: 8px }
+.hero .portrait{
+  aspect-ratio: 1/1; overflow:hidden; border-radius: 18px;
+}
+.hero .portrait img{ width:100%; height:100%; object-fit: cover }
+
+/* About split */
+.about .grid{
+  display:grid; gap: 20px; grid-template-columns: 0.9fr 1.1fr;
+}
+
+/* Skills: simple rows with progress bars */
+.skills-list{ display:grid; gap: 12px; margin-top: 10px }
+.skill{
+  padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.65); border:1px solid var(--panel-border);
+}
+.skill .row{ display:flex; justify-content:space-between; font-weight:600 }
+.bar{
+  height:8px; border-radius: 999px; background: #ecf0f8; overflow:hidden; margin-top:8px;
+}
+.fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--teal), var(--orchid), var(--coral));
+  width: var(--w, 60%); transition: width 240ms ease;
+}
+.skill:hover .fill{ width: calc(var(--w,60%) + 6%) }
+
+/* Projects grid */
+.grid-2{
+  display:grid; gap: 16px; grid-template-columns: 1fr 1fr;
+  margin-top: 10px;
+}
+.project .thumb{ aspect-ratio: 16/9; overflow:hidden; border-radius: 12px }
+.project .thumb img{ width:100%; height:100%; object-fit: cover; transition: transform 260ms ease }
+.project:hover .thumb img{ transform: scale(1.04) }
+
+/* Timeline */
+.timeline{ border-left: 3px solid rgba(0,0,0,0.08); padding-left: 14px; margin-top: 10px }
+.entry{ margin-bottom: 12px; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.7); border:1px solid var(--panel-border) }
+.meta{ font-size: 13px; color: var(--muted) }
+
+/* Contact */
+.contact .cols{ display:grid; gap: 16px; grid-template-columns: 1fr 1fr; margin-top: 10px }
+.input{
+  width:100%; padding:12px 14px; border-radius: 12px;
+  border:1px solid var(--panel-border);
+  background: rgba(255,255,255,0.8);
+}
+textarea.input{ min-height: 120px; resize: vertical }
+.actions{ margin-top: 10px }
+
+/* --------- Simple section dividers with clip-path --------- */
+/* Top wave */
+.divider-top{
+  position:absolute; inset:0 0 auto 0; height:90px; z-index:-1;
+  background: linear-gradient(135deg, #eef7ff, #f9eaff);
+  clip-path: polygon(0 100%, 0 40%, 20% 55%, 40% 38%, 60% 58%, 80% 42%, 100% 55%, 100% 100%); /* easy wave [12][6] */
+}
+/* Bottom diagonal */
+.divider-bottom{
+  position:absolute; inset:auto 0 0 0; height:90px; z-index:-1;
+  background: linear-gradient(135deg, #f0fff7, #fff1f1);
+  clip-path: polygon(0 0, 100% 20%, 100% 100%, 0 100%); /* simple diagonal [12][6] */
+}
+
+/* Each section gets a slightly different feel */
+.section.about{ background: linear-gradient(135deg, #f2fbff, #fff3fe) }
+.section.skills{ background: linear-gradient(135deg, #f2fff8, #fff6f1) }
+.section.projects{ background: linear-gradient(135deg, #f2fbff, #fff7f2) }
+.section.resume{ background: linear-gradient(135deg, #f3fff4, #fdf2ff) }
+.section.contact{ background: linear-gradient(135deg, #f4faff, #fff5f0) }
+
+/* Footer */
+footer{ text-align:center; padding: 28px 0; color: var(--muted) }
+
+/* --------- Responsive --------- */
+@media (max-width: 960px){
+  .hero{ grid-template-columns: 1fr }
+  .about .grid{ grid-template-columns: 1fr }
+  .grid-2{ grid-template-columns: 1fr }
+  .contact .cols{ grid-template-columns: 1fr }
+}
+</style>
+</head>
+<body>
+
+<!-- Simple sticky header -->
+<header class="header">
+  <div class="wrap">
+    <div class="nav card">
+      <div class="brand">
+        <span class="brand-badge"></span>
+        <span>Brightfolio</span>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="section" id="home" aria-label="Introduction">
+    <div class="divider-top"></div>
+    <div class="wrap hero">
+      <div>
+        <span class="tag">Product Designer • Frontend</span>
+        <h1>Hello, I’m Kai River</h1>
+        <p>I design and build thoughtful web experiences with a focus on clarity, speed, and color.</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#projects">See Projects</a>
+          <a class="btn" href="#contact">Get in Touch</a>
+        </div>
+      </div>
+      <div class="card portrait">
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop" alt="Portrait of Kai River">
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+  <!-- About -->
+  <section class="section about" id="about" aria-labelledby="about-h">
+    <div class="divider-top"></div>
+    <div class="wrap">
+      <div class="grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1522199710521-72d69614c702?q=80&w=1200&auto=format&fit=crop" alt="Clean workspace" style="border-radius:16px">
+        </div>
+        <div>
+          <h2 id="about-h">About Me</h2>
+          <p>Designer-developer who loves turning ideas into friendly, fast interfaces. Strong interest in accessibility and tidy systems.</p>
+          <p>When not pushing pixels, I explore color palettes, simple animations, and component patterns.</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section skills" id="skills" aria-labelledby="skills-h">
+    <div class="divider-top"></div>
+    <div class="wrap">
+      <h2 id="skills-h">Skills</h2>
+      <p>Clear structure, consistent components, and small touches that make interfaces feel alive.</p>
+
+      <div class="skills-list">
+        <div class="skill">
+          <div class="row"><span>Design Systems</span><span>80%</span></div>
+          <div class="bar"><div class="fill" style="--w:80%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="row"><span>CSS & Layout</span><span>85%</span></div>
+          <div class="bar"><div class="fill" style="--w:85%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="row"><span>Accessibility</span><span>70%</span></div>
+          <div class="bar"><div class="fill" style="--w:70%"></div></div>
+        </div>
+        <div class="skill">
+          <div class="row"><span>Frontend Dev</span><span>78%</span></div>
+          <div class="bar"><div class="fill" style="--w:78%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section projects" id="projects" aria-labelledby="projects-h">
+    <div class="divider-top"></div>
+    <div class="wrap">
+      <h2 id="projects-h">Projects</h2>
+      <p>Small, focused pieces that show thinking, structure, and a light, colorful touch.</p>
+
+      <div class="grid-2">
+        <article class="card project">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1400&auto=format&fit=crop" alt="Dashboard preview">
+          </div>
+          <div style="padding:12px">
+            <h3>Dashboard Mini</h3>
+            <p>Compact analytics dashboard with simple cards and neat spacing.</p>
+            <p><a class="btn" href="#">Open</a></p>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?q=80&w=1400&auto=format&fit=crop" alt="Landing page gradient">
+          </div>
+          <div style="padding:12px">
+            <h3>Landing Lite</h3>
+            <p>Basic promo layout using soft gradients and clean typography.</p>
+            <p><a class="btn" href="#">Open</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+  <!-- Resume -->
+  <section class="section resume" id="resume" aria-labelledby="resume-h">
+    <div class="divider-top"></div>
+    <div class="wrap">
+      <h2 id="resume-h">Resume / Experience</h2>
+      <p>Highlights from recent roles and study, presented as a simple timeline.</p>
+
+      <div class="timeline">
+        <div class="entry">
+          <div class="meta">2023 — Present · Product Designer • Aurora Apps</div>
+          <strong>Design system refresh</strong>
+          <p>Improved consistency and speed, shipped accessible components.</p>
+        </div>
+        <div class="entry">
+          <div class="meta">2021 — 2023 · Frontend Dev • Lume Lab</div>
+          <strong>Feature delivery</strong>
+          <p>Built neat UIs with clear structure and steady performance.</p>
+        </div>
+        <div class="entry">
+          <div class="meta">2017 — 2021 · B.Des + HCI</div>
+          <strong>Foundations</strong>
+          <p>Visual design, research basics, and hands-on prototyping.</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section contact" id="contact" aria-labelledby="contact-h">
+    <div class="divider-top"></div>
+    <div class="wrap">
+      <h2 id="contact-h">Contact</h2>
+      <p>Questions or ideas? Send a message or say hi on social.</p>
+
+      <div class="cols">
+        <form class="card" action="#" method="post" style="padding:14px">
+          <p><input class="input" type="text" name="name" placeholder="Name" required></p>
+          <p><input class="input" type="email" name="email" placeholder="Email" required></p>
+          <p><textarea class="input" name="message" placeholder="Message" required></textarea></p>
+          <div class="actions">
+            <button class="btn primary" type="submit">Send</button>
+          </div>
+        </form>
+
+        <div class="card" style="padding:14px">
+          <h3>Links</h3>
+          <p><a href="#">GitHub</a> · <a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">Email</a></p>
+          <p>Prefer email? hello@example.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider-bottom"></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2025 Kai River</div>
+</footer>
+
+</body>
+</html>
