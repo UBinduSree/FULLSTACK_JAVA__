@@ -1,5 +1,5 @@
 <!--
-Bindu Sree's Portfolio — Bright Theme HTML + CSS
+Bindu Sree's Portfolio — Vibrant Theme with Animations
 Instructions: Save as index.html and open in a browser.
 -->
 
@@ -26,10 +26,10 @@ Instructions: Save as index.html and open in a browser.
 
   <style>
     :root{
-      --bg-1: #ffffff;
-      --accent-1: #ff6b6b; /* coral */
-      --accent-2: #4e9cff; /* blue */
-      --accent-3: #7ef9a2; /* mint */
+      --gradient-1: linear-gradient(135deg,#ff6b6b,#ff9f80);
+      --gradient-2: linear-gradient(135deg,#4e9cff,#7bb9ff);
+      --gradient-3: linear-gradient(135deg,#7ef9a2,#4ad991);
+      --bg-light: #fdfcff;
       --muted: #555;
       --max-width: 1100px;
       --card-radius: 18px;
@@ -38,55 +38,65 @@ Instructions: Save as index.html and open in a browser.
     body{
       margin:0;
       font-family:'Inter', sans-serif;
-      background: linear-gradient(180deg,#ffffff 0%,#f0f7ff 100%);
+      background:linear-gradient(180deg,#fdfcff 0%,#f0faff 100%);
       color:#222;
       line-height:1.6;
       scroll-behavior:smooth;
     }
     .wrap{max-width:var(--max-width);margin:0 auto;padding:24px}
     header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .brand h1{font-family:'Poppins';font-size:20px;margin:0;color:#222}
+    .brand h1{font-family:'Poppins';font-size:22px;margin:0;background:var(--gradient-1);-webkit-background-clip:text;color:transparent}
     nav{display:flex;gap:12px}
-    nav a{text-decoration:none;color:#333;padding:8px 12px;border-radius:12px;font-weight:600}
-    nav a:hover{background:#eaf3ff;color:#111}
+    nav a{text-decoration:none;color:#333;padding:8px 12px;border-radius:12px;font-weight:600;transition:all 0.3s ease}
+    nav a:hover{background:var(--gradient-2);color:#fff}
 
     .hero{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:center;margin-bottom:40px}
-    .intro h2{font-family:'Poppins';font-size:32px;margin:0 0 10px;color:#111}
+    .intro h2{font-family:'Poppins';font-size:34px;margin:0 0 12px;background:var(--gradient-2);-webkit-background-clip:text;color:transparent;animation:fadeIn 1.5s ease}
     .intro p{margin:0 0 18px;color:var(--muted)}
-    .btn{padding:10px 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;text-decoration:none}
-    .btn-primary{background:linear-gradient(90deg,var(--accent-1),#ff9f80);color:#fff}
-    .btn-ghost{background:#f9f9f9;color:#333;border:1px solid #ddd}
+    .btn{padding:10px 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;text-decoration:none;transition:transform 0.3s ease}
+    .btn:hover{transform:scale(1.05)}
+    .btn-primary{background:var(--gradient-1);color:#fff}
+    .btn-ghost{background:#fff;color:#333;border:1px solid #ddd}
 
-    .profile{background:#fff;border-radius:var(--card-radius);padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.08);text-align:center}
-    .profile img{width:100%;max-width:220px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.1)}
-    .profile h3{margin:12px 0 6px}
-    .profile p{margin:0;color:var(--muted)}
+    .profile{background:#fff;border-radius:var(--card-radius);padding:18px;box-shadow:0 4px 20px rgba(0,0,0,0.08);text-align:center;transition:transform 0.4s ease}
+    .profile:hover{transform:translateY(-8px)}
+    .profile img{width:100%;max-width:220px;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,0.15);transition:transform 0.4s ease}
+    .profile img:hover{transform:scale(1.05)}
 
     .section-head{display:flex;align-items:center;gap:8px;margin:32px 0 16px}
-    .section-head h4{margin:0;font-family:'Poppins';color:#111}
+    .section-head h4{margin:0;font-family:'Poppins';color:#111;position:relative}
+    .section-head h4::after{content:"";display:block;width:50px;height:4px;background:var(--gradient-3);border-radius:2px;margin-top:6px}
 
     .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    .skill{background:#fff;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06)}
+    .skill{background:#fff;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06);transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .skill:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,0.1)}
     .skill h5{margin:0 0 8px}
     .bar{height:8px;background:#eee;border-radius:8px;overflow:hidden}
-    .bar span{display:block;height:100%;border-radius:8px}
+    .bar span{display:block;height:100%;border-radius:8px;animation:growBar 1.5s ease}
 
-    .projects-grid{display:grid;grid-template-columns:1fr;gap:18px}
-    .project{background:#fff;padding:18px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06)}
-    .project h5{margin:0 0 8px}
-    .project a{text-decoration:none;color:var(--accent-1);font-weight:600}
+    @keyframes growBar{from{width:0}to{width:100%}}
 
-    .timeline{border-left:3px solid var(--accent-2);padding-left:14px}
-    .titem{margin-bottom:20px}
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+    .project{background:#fff;padding:18px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06);transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .project:hover{transform:translateY(-8px);box-shadow:0 10px 26px rgba(0,0,0,0.12)}
+    .project h5{margin:0 0 8px;background:var(--gradient-1);-webkit-background-clip:text;color:transparent}
+    .project a{text-decoration:none;color:#0077ff;font-weight:600}
+
+    .timeline{border-left:3px solid #7bb9ff;padding-left:14px}
+    .titem{margin-bottom:20px;position:relative;padding-left:12px}
+    .titem::before{content:"";position:absolute;left:-11px;top:4px;width:14px;height:14px;background:#4e9cff;border-radius:50%}
     .titem h6{margin:0 0 6px;color:#111}
     .titem p{margin:0;color:var(--muted)}
 
     .contact-form{display:grid;gap:12px}
-    .contact-form input,.contact-form textarea{padding:12px;border-radius:8px;border:1px solid #ccc}
-    .contact-form button{background:linear-gradient(90deg,var(--accent-2),#7bb9ff);color:#fff;border:none}
+    .contact-form input,.contact-form textarea{padding:12px;border-radius:8px;border:1px solid #ccc;transition:border 0.3s ease}
+    .contact-form input:focus,.contact-form textarea:focus{border:1px solid #4e9cff;outline:none}
+    .contact-form button{background:var(--gradient-2);color:#fff;border:none;transition:transform 0.3s ease}
+    .contact-form button:hover{transform:scale(1.05)}
 
-    footer{text-align:center;padding:20px;margin-top:40px;color:#666;font-size:14px}
+    footer{text-align:center;padding:20px;margin-top:40px;color:#666;font-size:14px;background:#fafbff}
+
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
@@ -112,7 +122,7 @@ Instructions: Save as index.html and open in a browser.
         <a class="btn btn-ghost" href="#contact">Contact Me</a>
       </div>
       <aside class="profile">
-        <img src="bINDU_PASSIZEpIC.jpg" alt="Bindu Sree profile picture (AI generated)" />
+        <img src="../images/bINDU_PASSIZEpIC.jpg" alt="Bindu Sree profile picture (AI generated)" />
         <h3>Bindu Sree</h3>
         <p>CSE (AI & ML) Student</p>
       </aside>
@@ -126,14 +136,14 @@ Instructions: Save as index.html and open in a browser.
     <section id="skills">
       <div class="section-head"><h4>Skills</h4></div>
       <div class="skills-grid">
-        <div class="skill"><h5>C</h5><div class="bar"><span style="width:85%;background:var(--accent-2)"></span></div></div>
-        <div class="skill"><h5>Java</h5><div class="bar"><span style="width:80%;background:var(--accent-1)"></span></div></div>
-        <div class="skill"><h5>Python</h5><div class="bar"><span style="width:75%;background:var(--accent-3)"></span></div></div>
-        <div class="skill"><h5>DBMS</h5><div class="bar"><span style="width:70%;background:var(--accent-2)"></span></div></div>
-        <div class="skill"><h5>HTML & CSS</h5><div class="bar"><span style="width:90%;background:var(--accent-1)"></span></div></div>
-        <div class="skill"><h5>JavaScript</h5><div class="bar"><span style="width:70%;background:var(--accent-3)"></span></div></div>
-        <div class="skill"><h5>AI & ML (Beginner)</h5><div class="bar"><span style="width:50%;background:var(--accent-2)"></span></div></div>
-        <div class="skill"><h5>MERN Stack (Learning)</h5><div class="bar"><span style="width:40%;background:var(--accent-1)"></span></div></div>
+        <div class="skill"><h5>C</h5><div class="bar"><span style="width:85%;background:var(--gradient-2)"></span></div></div>
+        <div class="skill"><h5>Java</h5><div class="bar"><span style="width:80%;background:var(--gradient-1)"></span></div></div>
+        <div class="skill"><h5>Python</h5><div class="bar"><span style="width:75%;background:var(--gradient-3)"></span></div></div>
+        <div class="skill"><h5>DBMS</h5><div class="bar"><span style="width:70%;background:var(--gradient-2)"></span></div></div>
+        <div class="skill"><h5>HTML & CSS</h5><div class="bar"><span style="width:90%;background:var(--gradient-1)"></span></div></div>
+        <div class="skill"><h5>JavaScript</h5><div class="bar"><span style="width:70%;background:var(--gradient-3)"></span></div></div>
+        <div class="skill"><h5>AI & ML (Beginner)</h5><div class="bar"><span style="width:50%;background:var(--gradient-2)"></span></div></div>
+        <div class="skill"><h5>MERN Stack (Learning)</h5><div class="bar"><span style="width:40%;background:var(--gradient-1)"></span></div></div>
       </div>
     </section>
 
@@ -184,7 +194,7 @@ Instructions: Save as index.html and open in a browser.
     </section>
 
     <footer>
-      © 2025 Bindu Sree — Built with ❤️ using HTML & CSS
+      © 2025 Bindu Sree — Built with ❤️ using HTML, CSS & Vibrant Animations
     </footer>
   </div>
 </body>
