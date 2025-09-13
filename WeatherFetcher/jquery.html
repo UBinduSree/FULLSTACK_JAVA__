@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App - JQUERY</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <section>
+        <h2>Weather Info Fetcher ⛈️ </h2>
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <button id="fetchBtn">Get Weather</button>
+        <div id="weather"></div> 
+    </section>
+    <script>
+        const cityCoords = {
+            "new york": {lat: 40.7128, lon: -74.0060},
+            "london": {lat: 51.5074, lon: -0.1278},
+            "tokyo": {lat: 35.6895, lon: 139.6917},
+            "delhi": {lat: 28.7041, lon: 77.1025},
+            "sydney": {lat: -33.8688, lon: 151.2093}
+        };
+        $(document).ready(function(){
+            $("#fetchBtn").click(function(){
+                let city = $("#cityInput").val().toLowerCase();
+                if (!cityCoords[city]) {
+                    $("#weather").html(" ⚠️City not found in predefined list.");
+                    return;
+                }
+                let coords = cityCoords[city];
+                let url = `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lon}&current_weather=true`;
+
+                //AJAX Fetch
+                fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if(data.current_weather){
+                        $("#weather").html(`
+                            <h3>Weather in ${city.charAt(0).toUpperCase() + city.slice(1)}</h3>
+                            <p>🌡️Temperature: ${data.current_weather.temperature}°C</p>
+                            <p>💨Wind Speed: ${data.current_weather.windspeed} km/h</p>
+                            <p>☁️Weather Code: ${data.current_weather.weathercode}</p>
+                        `);
+                    }else{
+                        $("#weather").html(" ⚠️Weather data not available.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    $("#weather").html(" ⚠️Error fetching data.");
+                });
+            });
+        })
+    </script>
+</body>
+</html>

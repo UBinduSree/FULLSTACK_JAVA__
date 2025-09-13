@@ -1,0 +1,211 @@
+
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To do List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #ebd0b2;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        min-height: 100vh;
+        margin: 0;
+      } 
+      .container{
+        border-radius: 10px;
+        background: #f7f9fc;
+        padding: 30px 40px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 400px;
+        
+      }
+
+      h1 {
+        font-size: 2.8rem;
+        color: #2c3e50;
+        margin-bottom: 0.2em;
+      }
+
+      h2 {
+        font-weight: 400;
+        color: #8b876e;
+        margin-bottom: 1em;
+        
+      }
+
+      #taskList {
+        list-style: none;
+        padding: 0;
+        width: 320px;
+        background: rgb(205, 211, 214);
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5em;
+        max-height: 300px;
+      }
+
+      #taskList li {
+        padding: 12px 18px;
+        border-bottom: 1px solid #eee;
+        font-size: 1.1rem;
+      }
+
+      #taskList li:last-child {
+        border-bottom: none;
+      }
+
+      #taskInput {
+        width: 240px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        border: 2px solid #3498db;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.3s ease;
+        margin-right: 10px;
+      }
+
+      #taskInput:focus {
+        border-color: #2980b9;
+      }
+
+      #addTask {
+        padding: 12px 22px;
+        font-size: 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 3px 6px rgba(52, 152, 219, 0.4);
+      }
+  
+
+      #addTask:hover {
+        background-color: #2980b9;
+      }
+      .complete {
+        margin-left: 15px;
+        padding: 10px 16px;
+        font-size: 1rem;
+        background-color: #2bc96d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .complete:hover {
+        background-color: #27ae60;
+      }
+      .delete {
+        margin-left: 10px;
+        padding: 10px 16px;
+        font-size: 1rem;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .delete:hover {
+        background-color: #c0392b;
+      }
+      .editTask {
+        width: 200px;
+        padding: 8px 12px;
+        font-size: 1rem;
+        border: 2px solid #3498db;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.3s ease;
+        margin-bottom: 8px;
+      }
+        .editTask:focus {
+            border-color: #2980b9;
+        }
+
+      @media (max-width: 400px) {
+        #taskList {
+          width: 90vw;
+        }
+        #taskInput {
+          width: 60vw;
+          margin-bottom: 10px;
+        }
+        #addTask {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <h1>Todo List</h1>
+    <h2>These are the tasks to complete:</h2>
+    <ul id="taskList">
+      <li><strong>Task 1</strong> <button class="complete">Complete</button><button class="delete">Delete</button></li>
+      <li><strong>Task 2</strong> <button class="complete">Complete</button><button class="delete">Delete</button></li>
+      <li><strong>Task 3</strong> <button class="complete">Complete</button><button class="delete">Delete</button></li>
+    </ul>
+    <input type="text" id="taskInput" placeholder="Enter a new task" />
+    <button id="addTask">Add Task</button>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("#addTask").click(function () {
+          let task = $("#taskInput").val();
+          if (task) {
+            $("#taskList").append("<li><strong>" + task + "</strong> <button class=\"complete\">Complete</button><button class=\"delete\">Delete</button></li>");
+            $("#taskInput").val("");
+          }
+        });
+        //mark task as complete and remove it from the list using markdown style,
+        $("#taskList").on("click", ".complete", function () {
+          $(this).parent().css("background-color", "#d9ffd9");
+          $(this).remove();
+        });
+        //add a delete button to remove the completed task from the list
+        $("#taskList").on("click", ".delete", function () {
+          $(this).parent().remove();
+        });
+              // Edit task on double-click
+      $("#taskList").on("dblclick", "strong", function () {
+        let currentText = $(this).text();
+        let input = $("<input type='text' class='editTask' />");
+        input.val(currentText);
+        $(this).replaceWith(input);
+        input.focus();
+
+        // Save on Enter
+        input.keydown(function (e) {
+          if (e.key === "Enter") {
+            let newText = $(this).val();
+            $(this).replaceWith("<strong>" + newText + "</strong>");
+          }
+        });
+
+        // Save on blur (click outside)
+        input.blur(function () {
+          let newText = $(this).val();
+          $(this).replaceWith("<strong>" + newText + "</strong>");
+        });
+      });
+
+      });
+    </script>
+  </body>
+</html>
+
+</body>
+</html>

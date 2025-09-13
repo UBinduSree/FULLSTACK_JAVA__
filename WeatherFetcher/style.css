@@ -1,0 +1,37 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background: #342a2a7e;
+}
+h2{
+    color:#333;
+}
+section{
+    background:rgb(231, 180, 180);
+    padding:20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 400px;
+    box-shadow: 1px 4px 10px rgba(8, 8, 8, 0.252);
+}
+input,button{
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    font-style: italic;
+}
+button{
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover{
+    background: #00aab3;
+}
+#weather{
+    margin-top: 20px;
+    font-size: 18px;
+}
